@@ -26,8 +26,6 @@
   },
   "homepage": "https://github.com/nfischer/ohm-build#readme",
   "dependencies": {
-    "shelljs": "^0.6.0",
-    "xmldom": "^0.1.22",
-    "xpath": "0.0.22"
+    "shelljs": "^0.6.0"
   }
 }
