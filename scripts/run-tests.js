@@ -12,8 +12,11 @@ ls('.').forEach(function (d) {
   echo('Running test: ' + d);
   cd(d);
   var actual = exec(cmd + ' index.generator.html').stdout;
-  if (actual !== cat('index.html')+'\n') {
+  var expected = cat('index.html');
+  if (actual !== expected) {
     console.error('** Test failed!');
+    console.error('expected: ' + JSON.stringify(expected));
+    console.error('actual:   ' + JSON.stringify(actual));
     ret = 1;
   }
   cd('-');
