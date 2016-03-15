@@ -34,7 +34,7 @@ var ohmGrammar = cat(ohmFile).trim();
 var newTag = matchString
                 .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
                 .replace(/\s+src=".*"/, '');
-var output = sed(matchString.trim(), newTag, inputFile);
+var output = sed(matchString.trim(), newTag.trim(), inputFile);
 if (output.trim() === cat(inputFile).trim()) {
   echo('No replacement was made. Internal error.');
   exit(4);
