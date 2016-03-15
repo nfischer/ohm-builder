@@ -1,5 +1,7 @@
 # Ohm-build
 
+[![Build Status](https://travis-ci.org/nfischer/ohm-build.svg?branch=master)](https://travis-ci.org/nfischer/ohm-build)
+
 Bring ohm to your browser the easy way.
 
 What's Ohm? [Check it out](https://github.com/cdglabs/ohm).
