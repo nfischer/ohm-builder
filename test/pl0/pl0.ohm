@@ -1,0 +1,52 @@
+PL0 {
+
+  Start
+    = Seq
+
+  Seq
+    = Stmt Seq  -- seq
+    | Stmt      -- base
+
+  Stmt
+    = var ident "=" Expr ";"       -- var
+    | print AddExpr ";"            -- print
+    | if Expr then Stmt else Stmt  -- if3
+    | if Expr then Stmt            -- if2
+    | ident ":=" Expr ";"          -- assign
+
+  Expr
+    = AddExpr
+
+  AddExpr
+    = AddExpr "+" MulExpr  -- plus
+    | AddExpr "-" MulExpr  -- minus
+    | MulExpr
+
+  MulExpr
+    = MulExpr "*" PriExpr  -- times
+    | MulExpr "/" PriExpr  -- divide
+    | PriExpr
+
+  PriExpr
+    = "(" Expr ")"  -- paren
+    | "+" PriExpr   -- pos
+    | "-" PriExpr   -- neg
+    | number
+    | ident
+
+  number  (a number literal)
+    = digit* "." digit+  -- fract
+    | digit+             -- whole
+
+  ident  (an identifier)
+    = ~keyword letter alnum*
+
+  var   = "var" ~alnum
+  print = "print" ~alnum
+  if    = "if" ~alnum
+  then  = "then" ~alnum
+  else  = "else" ~alnum
+
+  keyword = var | print | if | then | else
+
+}
