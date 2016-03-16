@@ -16,11 +16,13 @@ ls('.').forEach(function (d) {
   var inputFile = test('-f', INPUT) ? INPUT : path.join(ls('-d', '*/')[0], INPUT);
   var outputFile = test('-f', INPUT) ? OUTPUT : path.join(ls('-d', '*/')[0], OUTPUT);
   var actual = exec(cmd + ' ' + inputFile).stdout;
-  var expected = cat(outputFile)+'\n';
+  var expected = cat(outputFile);
   if (actual !== expected) {
     console.error('** Test failed!');
-    console.error('expected: '+JSON.stringify(expected));
-    console.error('actual:   '+JSON.stringify(actual));
+    console.error('expected: '+expected[expected.length-1]);
+    console.error('actual: '+actual[actual.length-1]);
+    // console.error('expected: '+JSON.stringify(expected));
+    // console.error('actual:   '+JSON.stringify(actual));
     ret = 1;
   }
   cd('-');

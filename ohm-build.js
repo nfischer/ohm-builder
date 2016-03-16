@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 require('shelljs/global');
+var xpath = require('xpath');
+var xmldom = require('xmldom');
+
 var path = require('path');
 
 config.fatal = true;
@@ -18,31 +21,28 @@ if (inputFile === outputFile) {
   exit(2);
 }
 
-// Replace all ohm tags with inlining the code
-var regexString = '<script src=".*.ohm" type="text/ohm-js"></script>';
-var matchString = grep(regexString, inputFile);
-if (!matchString) { // try the other order
-  regexString = '<script type="text/ohm-js" src=".*.ohm"></script>';
-  matchString = grep(regexString, inputFile);
-}
-if (!matchString) {
-  echo('Could not find script tag');
-  exit(3);
-}
-var ohmFile = path.join(path.dirname(inputFile), matchString.match(/src="(.*)"/)[1]);
-var ohmGrammar = cat(ohmFile).trim();
-var newTag = matchString
-                .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
-                .replace(/\s+src=".*"/, '');
-var output = sed(matchString.trim(), newTag.trim(), inputFile);
+var parserArgs = {
+  errorHandler:{} // silence error messages
+};
+var doc = new xmldom.DOMParser(parserArgs).parseFromString(cat(inputFile));
+
+var nodes = xpath.select('//script[@src]', doc);
+
+nodes.forEach(function (node) {
+  if (node.getAttribute('src').match(/\.ohm/i)) {
+    var fname = node.getAttribute('src');
+    node.unsafeTextContent = '\n' + cat(path.join(path.dirname(inputFile), fname)).trim() + '\n';
+    node.removeAttribute('src');
+  }
+});
+
+var output = (new xmldom.XMLSerializer).serializeToString(doc, null, true);
 if (output.trim() === cat(inputFile).trim()) {
   echo('No replacement was made. Internal error.');
   exit(4);
 }
 
 if (outputFile)
-  output.to(outputFile);
+  (output+'\n').to(outputFile);
 else
   echo(output);
-
-console.error('Success!');
