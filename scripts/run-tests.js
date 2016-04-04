@@ -5,7 +5,7 @@ var path = require('path');
 
 cd('test');
 
-var cmd = 'node ../../ohm-build.js';
+var cmd = 'node ../../ohm-builder.js';
 var ret = 0;
 var INPUT = 'index.generator.html';
 var OUTPUT = 'index.html';
