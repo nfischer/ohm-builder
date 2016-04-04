@@ -1,30 +1,31 @@
 {
-  "name": "ohm-build",
+  "name": "ohm-builder",
   "version": "0.1.0",
   "description": "Bring ohm to your browser the easy way",
-  "main": "ohm-build.js",
+  "main": "ohm-builder.js",
   "scripts": {
     "test": "node ./scripts/run-tests.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nfischer/ohm-build.git"
+    "url": "git+https://github.com/nfischer/ohm-builder.git"
   },
   "keywords": [
     "ohm",
     "build",
+    "builder",
     "tool",
     "html"
   ],
   "bin": {
-    "ohm-build.js": "./ohm-build.js"
+    "ohm-builder.js": "./ohm-builder.js"
   },
   "author": "Nate Fischer <ntfschr@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nfischer/ohm-build/issues"
+    "url": "https://github.com/nfischer/ohm-builder/issues"
   },
-  "homepage": "https://github.com/nfischer/ohm-build#readme",
+  "homepage": "https://github.com/nfischer/ohm-builder#readme",
   "dependencies": {
     "shelljs": "^0.6.0"
   }

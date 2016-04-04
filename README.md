@@ -1,6 +1,6 @@
-# Ohm-build
+# Ohm-builder
 
-[![Build Status](https://travis-ci.org/nfischer/ohm-build.svg?branch=master)](https://travis-ci.org/nfischer/ohm-build)
+[![Build Status](https://travis-ci.org/nfischer/ohm-builder.svg?branch=master)](https://travis-ci.org/nfischer/ohm-builder)
 
 Bring ohm to your browser the easy way.
 
@@ -37,7 +37,7 @@ new HTML file with the grammar included.
 ```Bash
 # read in your HTML input (that uses <script src="grammar.ohm">)
 # write out fresh HTML output that includes your grammar
-$ ohm-build.js path/to/input-file.html path/to/output-file.html
+$ ohm-builder.js path/to/input-file.html path/to/output-file.html
 ```
 
 `output-file.html` is your new HTML file, compatible with the browser of your
@@ -55,7 +55,7 @@ see how it's done.
 Install this from the git repo with:
 
 ```Bash
-$ npm install github:nfischer/ohm-build
+$ npm install github:nfischer/ohm-builder
 ```
 
 Or you can use it as a package dependency:
@@ -63,6 +63,6 @@ Or you can use it as a package dependency:
 ```javascript
 // Inside package.json
 "dependencies": {
-  "ohm-build": "github:nfischer/ohm-build"
+  "ohm-builder": "github:nfischer/ohm-builder"
 },
 ```
