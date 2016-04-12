@@ -1,6 +1,7 @@
 # Ohm-builder
 
 [![Build Status](https://travis-ci.org/nfischer/ohm-builder.svg?branch=master)](https://travis-ci.org/nfischer/ohm-builder)
+[![Build status](https://ci.appveyor.com/api/projects/status/94si31343bhm82f5/branch/master?svg=true)](https://ci.appveyor.com/project/shelljs/ohm-builder/branch/master)
 
 Bring ohm to your browser the easy way.
 
