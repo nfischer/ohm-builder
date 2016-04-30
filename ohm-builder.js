@@ -20,10 +20,10 @@ if (inputFile === outputFile) {
 
 // Replace all ohm tags with inlining the code
 var regexString = '<script src=".*.ohm" type="text/ohm-js"></script>';
-var matchString = grep(regexString, inputFile);
+var matchString = grep(regexString, inputFile).trim();
 if (!matchString) { // try the other order
   regexString = '<script type="text/ohm-js" src=".*.ohm"></script>';
-  matchString = grep(regexString, inputFile);
+  matchString = grep(regexString, inputFile).trim();
 }
 if (!matchString) {
   echo('Could not find script tag');
