@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node ./scripts/run-tests.js"
   },
+  "files": [
+    "ohm-builder.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nfischer/ohm-builder.git"
