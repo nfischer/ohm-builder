@@ -7,6 +7,12 @@ Bring ohm to your browser the easy way.
 
 What's Ohm? [Check it out](https://github.com/cdglabs/ohm).
 
+## Installation
+
+```Bash
+$ npm install --save-dev ohm-builder
+```
+
 ## What's the deal with HTML?
 
 Ohm has steps on [defining your
@@ -35,35 +41,18 @@ new HTML file with the grammar included.
 
 ## Ok, so how do I use this?
 
-```Bash
-# read in your HTML input (that uses <script src="grammar.ohm">)
-# write out fresh HTML output that includes your grammar
-$ ohm-builder.js path/to/input-file.html path/to/output-file.html
-```
-
-`output-file.html` is your new HTML file, compatible with the browser of your
-choice.
-
-**But what if I don't want to type that ugly command all the time?**
-
-Me neither. That's why I use task runners like [gulp](http://gulpjs.com/) to do
-it for me. Check out [my
-gulpfile](https://github.com/nfischer/BashToShellJS/blob/master/gulpfile.js) to
-see how it's done.
-
-## Installation
-
-Install this from the git repo with:
-
-```Bash
-$ npm install github:nfischer/ohm-builder
-```
-
-Or you can use it as a package dependency:
+Try it out as an npm script:
 
 ```javascript
-// Inside package.json
-"dependencies": {
-  "ohm-builder": "github:nfischer/ohm-builder"
+// put this in package.json
+"scripts": {
+  // ...
+  "build": "ohm-builder.js src/index.generator.html index.html"
 },
+```
+
+```bash
+$ # Make your edits in src/index.generator.html
+$ # Then run this command to build index.html
+$ npm run build
 ```
