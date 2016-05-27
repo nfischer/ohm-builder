@@ -26,18 +26,19 @@ if (!matchString) { // try the other order
   matchString = grep(regexString, inputFile).trim();
 }
 if (!matchString) {
-  echo('Could not find script tag');
-  exit(3);
-}
-var ohmFile = path.join(path.dirname(inputFile), matchString.match(/src="(.*)"/)[1]);
-var ohmGrammar = cat(ohmFile).trim();
-var newTag = matchString
-                .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
-                .replace(/\s+src=".*"/, '');
-var output = sed(matchString.trim(), newTag.trim(), inputFile);
-if (output.trim() === cat(inputFile).trim()) {
-  echo('No replacement was made. Internal error.');
-  exit(4);
+  console.error('Could not find script tag');
+  var output = cat(inputFile);
+} else {
+  var ohmFile = path.join(path.dirname(inputFile), matchString.match(/src="(.*)"/)[1]);
+  var ohmGrammar = cat(ohmFile).trim();
+  var newTag = matchString
+                  .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
+                  .replace(/\s+src=".*"/, '');
+  var output = sed(matchString.trim(), newTag.trim(), inputFile);
+  if (output.trim() === cat(inputFile).trim()) {
+    echo('No replacement was made. Internal error.');
+    exit(4);
+  }
 }
 
 if (outputFile)
