@@ -29,7 +29,8 @@ if (!matchString) {
   console.error('Warn: could not find script tag');
   var output = cat(inputFile);
 } else {
-  var ohmFile = path.join(path.dirname(inputFile), matchString.match(/src="(.*)"/)[1]);
+  var sourceDir = path.dirname(outputFile || inputFile);
+  var ohmFile = path.join(sourceDir, matchString.match(/src="(.*)"/)[1]);
   var ohmGrammar = cat(ohmFile).trim();
   var newTag = matchString
                   .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
