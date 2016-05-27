@@ -26,7 +26,7 @@ if (!matchString) { // try the other order
   matchString = grep(regexString, inputFile).trim();
 }
 if (!matchString) {
-  console.error('Could not find script tag');
+  console.error('Warn: could not find script tag');
   var output = cat(inputFile);
 } else {
   var ohmFile = path.join(path.dirname(inputFile), matchString.match(/src="(.*)"/)[1]);
