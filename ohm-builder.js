@@ -23,10 +23,7 @@ var regex = /<script\s+type="text\/ohm-js"\s+src=".*\.ohm"><\/script>/;
 var matchStrings = grep(regex, inputFile).trim().split('\n').map(function(x) {
   return x.trim();
 }).filter(function (x) {
-  if (x) {
-    console.warn('ret');
-    return x;
-  }
+  if (x) return x;
 });
 if (!matchStrings.length) { // try the other order
   regex = /<script\s+src=".*\.ohm"\s+type="text\/ohm-js"><\/script>/;
@@ -47,7 +44,7 @@ if (!matchStrings.length) {
     var newTag = matchString
                     .replace(/\s+src="[^"]*"/, '')
                     .replace('></script>', '>\n' + ohmGrammar + '\n</script>');
-    output = output.sed(matchString.trim(), newTag.trim());
+    output = output.replace(matchString.trim(), newTag.trim());
     if (output.trim() === cat(inputFile).trim()) {
       echo('No replacement was made. Internal error.');
       exit(4);
