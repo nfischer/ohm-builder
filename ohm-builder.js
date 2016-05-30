@@ -19,27 +19,40 @@ if (inputFile === outputFile) {
 }
 
 // Replace all ohm tags with inlining the code
-var regexString = '<script src=".*.ohm" type="text/ohm-js"></script>';
-var matchString = grep(regexString, inputFile).trim();
-if (!matchString) { // try the other order
-  regexString = '<script type="text/ohm-js" src=".*.ohm"></script>';
-  matchString = grep(regexString, inputFile).trim();
-}
-if (!matchString) {
-  console.error('Warn: could not find script tag');
-  var output = cat(inputFile);
-} else {
-  var sourceDir = path.dirname(outputFile || inputFile);
-  var ohmFile = path.join(sourceDir, matchString.match(/src="(.*)"/)[1]);
-  var ohmGrammar = cat(ohmFile).trim();
-  var newTag = matchString
-                  .replace('></script>', '>\n' + ohmGrammar + '\n</script>')
-                  .replace(/\s+src=".*"/, '');
-  var output = sed(matchString.trim(), newTag.trim(), inputFile);
-  if (output.trim() === cat(inputFile).trim()) {
-    echo('No replacement was made. Internal error.');
-    exit(4);
+var regex = /<script\s+type="text\/ohm-js"\s+src=".*\.ohm"><\/script>/;
+var matchStrings = grep(regex, inputFile).trim().split('\n').map(function(x) {
+  return x.trim();
+}).filter(function (x) {
+  if (x) {
+    console.warn('ret');
+    return x;
   }
+});
+if (!matchStrings.length) { // try the other order
+  regex = /<script\s+src=".*\.ohm"\s+type="text\/ohm-js"><\/script>/;
+  matchStrings = grep(regex, inputFile).split('\n').map(function(x) {
+    return x.trim();
+  });
+}
+var output = cat(inputFile);
+if (!matchStrings.length) {
+  console.error('Warn: could not find script tag');
+} else {
+  matchStrings.forEach(function (matchString) {
+    if (!matchString)
+      return;
+    var sourceDir = path.dirname(outputFile || inputFile);
+    var ohmFile = path.join(sourceDir, matchString.match(/src="([^"]+)"/)[1]);
+    var ohmGrammar = cat(ohmFile).trim();
+    var newTag = matchString
+                    .replace(/\s+src="[^"]*"/, '')
+                    .replace('></script>', '>\n' + ohmGrammar + '\n</script>');
+    output = output.sed(matchString.trim(), newTag.trim());
+    if (output.trim() === cat(inputFile).trim()) {
+      echo('No replacement was made. Internal error.');
+      exit(4);
+    }
+  });
 }
 
 if (outputFile)
@@ -47,4 +60,4 @@ if (outputFile)
 else
   echo(output);
 
-console.error('Success!');
+console.warn('Success!');
