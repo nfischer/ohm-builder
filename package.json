@@ -4,7 +4,10 @@
   "description": "Bring ohm to your browser the easy way",
   "main": "ohm-builder.js",
   "scripts": {
-    "test": "node ./scripts/run-tests.js"
+    "test": "node ./scripts/run-tests.js",
+    "release:major": "release major",
+    "release:minor": "release minor",
+    "release:patch": "release patch"
   },
   "files": [
     "ohm-builder.js"
@@ -31,5 +34,8 @@
   "homepage": "https://github.com/nfischer/ohm-builder#readme",
   "dependencies": {
     "shelljs": "^0.7.0"
+  },
+  "devDependencies": {
+    "shelljs-release": "^0.1.3"
   }
 }
