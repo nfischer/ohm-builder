@@ -1,34 +1,31 @@
 #!/usr/bin/env node
-require('shelljs/global');
+var shell = require('shelljs');
 var path = require('path');
 
-config.fatal = true;
-
 if (process.argv.length < 3) {
-  echo('Usage: ' + path.basename(process.argv[1]) + ' <inputFile>');
-  echo('  or   ' + path.basename(process.argv[1]) + ' <inputFile> <html_output>');
-  exit(1);
+  console.error('Usage: ' + path.basename(process.argv[1]) + ' <inputFile>');
+  console.error('  or   ' + path.basename(process.argv[1]) + ' <inputFile> <html_output>');
+  process.exit(1);
 }
 
 var inputFile = process.argv[2];
 var outputFile = process.argv[3];
 
 if (inputFile === outputFile) {
-  echo('Must provide different file names');
-  exit(2);
+  console.error('Must provide different file names');
+  process.exit(2);
 }
 
-var contents = cat(inputFile).toString();
+var contents = shell.cat(inputFile).toString();
 var jsdom = require('jsdom');
 var doc = jsdom.jsdom(contents);
 var window = doc.defaultView;
 var $ = require('jquery')(window);
+var sourceDir = path.dirname(outputFile || inputFile);
 $('script[type="text/ohm-js"]').each(function (_, b) {
   var node = $(b);
   var fname = node.attr('src');
-  var sourceDir = path.dirname(outputFile || inputFile);
-  var ohmFile = path.join(sourceDir, fname);
-  var grammarContents = cat(ohmFile).trim();
+  var grammarContents = shell.cat(path.join(sourceDir, fname)).trim();
   node.text('\n' + grammarContents + '\n'); // wrap with whitespace
   node.removeAttr('src');
 });
@@ -36,8 +33,8 @@ $('script[type="text/ohm-js"]').each(function (_, b) {
 var output = jsdom.serializeDocument(doc);
 
 if (outputFile)
-  output.to(outputFile);
+  (new ShellString(output)).to(outputFile);
 else
-  echo(output);
+  console.log(output);
 
 console.warn('Success!');
