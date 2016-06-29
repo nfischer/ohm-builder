@@ -1,60 +1,40 @@
 #!/usr/bin/env node
-require('shelljs/global');
+var shell = require('shelljs');
 var path = require('path');
 
-config.fatal = true;
-
 if (process.argv.length < 3) {
-  echo('Usage: ' + path.basename(process.argv[1]) + ' <inputFile>');
-  echo('  or   ' + path.basename(process.argv[1]) + ' <inputFile> <html_output>');
-  exit(1);
+  console.error('Usage: ' + path.basename(process.argv[1]) + ' <inputFile>');
+  console.error('  or   ' + path.basename(process.argv[1]) + ' <inputFile> <html_output>');
+  process.exit(1);
 }
 
 var inputFile = process.argv[2];
 var outputFile = process.argv[3];
 
 if (inputFile === outputFile) {
-  echo('Must provide different file names');
-  exit(2);
+  console.error('Must provide different file names');
+  process.exit(2);
 }
 
-// Replace all ohm tags with inlining the code
-var regex = /<script\s+type="text\/ohm-js"\s+src=".*\.ohm"><\/script>/;
-var matchStrings = grep(regex, inputFile).trim().split('\n').map(function(x) {
-  return x.trim();
-}).filter(function (x) {
-  if (x) return x;
+var contents = shell.cat(inputFile).toString();
+var jsdom = require('jsdom');
+var doc = jsdom.jsdom(contents);
+var window = doc.defaultView;
+var $ = require('jquery')(window);
+var sourceDir = path.dirname(outputFile || inputFile);
+$('script[type="text/ohm-js"]').each(function (_, b) {
+  var node = $(b);
+  var fname = node.attr('src');
+  var grammarContents = shell.cat(path.join(sourceDir, fname));
+  node.text('\n' + grammarContents); // prefix with whitespace
+  node.removeAttr('src');
 });
-if (!matchStrings.length) { // try the other order
-  regex = /<script\s+src=".*\.ohm"\s+type="text\/ohm-js"><\/script>/;
-  matchStrings = grep(regex, inputFile).split('\n').map(function(x) {
-    return x.trim();
-  });
-}
-var output = cat(inputFile);
-if (!matchStrings.length) {
-  console.error('Warn: could not find script tag');
-} else {
-  matchStrings.forEach(function (matchString) {
-    if (!matchString)
-      return;
-    var sourceDir = path.dirname(outputFile || inputFile);
-    var ohmFile = path.join(sourceDir, matchString.match(/src="([^"]+)"/)[1]);
-    var ohmGrammar = cat(ohmFile).trim();
-    var newTag = matchString
-                    .replace(/\s+src="[^"]*"/, '')
-                    .replace('></script>', '>\n' + ohmGrammar + '\n</script>');
-    output = output.replace(matchString.trim(), newTag.trim());
-    if (output.trim() === cat(inputFile).trim()) {
-      echo('No replacement was made. Internal error.');
-      exit(4);
-    }
-  });
-}
+
+var output = jsdom.serializeDocument(doc);
 
 if (outputFile)
-  output.to(outputFile);
+  (new shell.ShellString(output)).to(outputFile);
 else
-  echo(output);
+  console.log(output);
 
 console.warn('Success!');
