@@ -25,15 +25,15 @@ var sourceDir = path.dirname(outputFile || inputFile);
 $('script[type="text/ohm-js"]').each(function (_, b) {
   var node = $(b);
   var fname = node.attr('src');
-  var grammarContents = shell.cat(path.join(sourceDir, fname)).trim();
-  node.text('\n' + grammarContents + '\n'); // wrap with whitespace
+  var grammarContents = shell.cat(path.join(sourceDir, fname));
+  node.text('\n' + grammarContents); // prefix with whitespace
   node.removeAttr('src');
 });
 
 var output = jsdom.serializeDocument(doc);
 
 if (outputFile)
-  (new ShellString(output)).to(outputFile);
+  (new shell.ShellString(output)).to(outputFile);
 else
   console.log(output);
 
