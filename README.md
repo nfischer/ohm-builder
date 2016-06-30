@@ -56,3 +56,22 @@ $ # Make your edits in src/index.generator.html
 $ # Then run this command to build index.html
 $ npm run build
 ```
+
+### Using a watcher (recommended)
+
+If you don't want to constantly reenter that command, check out `watch` to
+automatically recompile your project:
+
+```bash
+$ npm install --save-dev watch
+```
+
+Then, assuming your file is inside `src/`, put this in `package.json`:
+
+```javascript
+"scripts": {
+  // ...
+  "build": "ohm-builder.js src/index.generator.html index.html",
+  "build:watch": "watch 'npm run build' src"
+},
+```
