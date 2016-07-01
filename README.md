@@ -11,6 +11,8 @@ What's Ohm? [Check it out](https://github.com/cdglabs/ohm).
 
 ## Installation
 
+This requires Node v4+
+
 ```Bash
 $ npm install --save-dev ohm-builder
 ```
