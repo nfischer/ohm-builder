@@ -1,6 +1,6 @@
 {
   "name": "ohm-builder",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Bring ohm to your browser the easy way",
   "main": "ohm-builder.js",
   "scripts": {
