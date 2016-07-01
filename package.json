@@ -4,7 +4,7 @@
   "description": "Bring ohm to your browser the easy way",
   "main": "ohm-builder.js",
   "scripts": {
-    "test": "node ./scripts/run-tests.js",
+    "test": "nyc --reporter=text --reporter=lcov node ./scripts/run-tests.js",
     "posttest": "npm run lint",
     "lint": "eslint .",
     "release:major": "release major",
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "eslint": "^2.13.1",
+    "nyc": "^6.6.1",
     "shelljs-release": "^0.1.3"
   }
 }

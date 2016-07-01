@@ -1,8 +1,8 @@
 # Ohm-builder
 
-[![Travis](https://img.shields.io/travis/nfischer/ohm-builder.svg?maxAge=2592000)](https://travis-ci.org/nfischer/ohm-builder)
-[![Build status](https://ci.appveyor.com/api/projects/status/94si31343bhm82f5/branch/master?svg=true)](https://ci.appveyor.com/project/shelljs/ohm-builder/branch/master)
-[![npm (scoped)](https://img.shields.io/npm/v/ohm-builder.svg?maxAge=2592000)](https://www.npmjs.com/package/ohm-builder)
+[![Travis](https://img.shields.io/travis/nfischer/ohm-builder/master.svg?style=flat-square&label=Travis)](https://travis-ci.org/nfischer/ohm-builder)
+[![AppVeyor](https://img.shields.io/appveyor/ci/shelljs/ohm-builder/master.svg?style=flat-square&label=Appveyor)](https://ci.appveyor.com/project/shelljs/ohm-builder/branch/master)
+[![npm](https://img.shields.io/npm/v/ohm-builder.svg?style=flat-square)](https://www.npmjs.com/package/ohm-builder)
 
 Bring ohm to your browser the easy way.
 
