@@ -79,3 +79,7 @@ Then, assuming your file is inside `src/`, put this in `package.json`:
   "build:watch": "watch 'npm run build' src"
 },
 ```
+
+Then, just run the command `npm run build:watch`, and make your edits in another
+editor/terminal window. The script will be re-run each time a file in `src/` is
+saved.
