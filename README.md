@@ -9,6 +9,17 @@ Bring ohm to your browser the easy way.
 
 What's Ohm? [Check it out](https://github.com/cdglabs/ohm).
 
+## Deprecated
+
+**Deprecation notice:** This package is no longer being maintained. Instead of
+loading the `file://` URI in your browser, my recommendation is to serve your
+`index.html` file with a web server (like
+[`http-server`](https://www.npmjs.com/package/http-server)) and load it over
+HTTP. You can still include your grammar with `<script type="text/ohm-js"
+src="src/grammar.ohm"></script>` in your HTML, however loading over HTTP
+allows modern web browsers to interpret the `.ohm` file correctly. To see this
+in action, check out https://github.com/nfischer/shelljs-transpiler/.
+
 ## Installation
 
 This requires Node v4+
@@ -28,7 +39,7 @@ HTML's `<script>` tag only allows you to use the `src=` attribute if you're
 using a path to a *javascript* file, not an Ohm grammar. **Let's fix that.**
 
 Now you can write your HTML with script tags like: `<script type="text/ohm-js"
-src="src/bash.ohm"></script>`. Run this tool and you can statically generate a
+src="src/grammar.ohm"></script>`. Run this tool and you can statically generate a
 new HTML file with the grammar included.
 
 ## Why would I want this?
